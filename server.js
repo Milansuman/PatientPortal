@@ -17,12 +17,21 @@ app.engine(TEMPLATE_EXT, (filePath, options, callback) => {
         
         if(err) return callback(err);
 
-        const rendered = content.toString()
-            .replace("$description$", `${options.description}`)
-            .replace("$clinic-name$", `${options.clinicName}`)
-            .replace("$url$", `${options.url}`)
-            .replace("$address$", `${options.address}`)
-            .replace("$email$", `${options.email}`);
+        let rendered = content.toString()
+            .replace(/\$description\$/g, `${options.description}`)
+            .replace(/\$clinic-name\$/g, `${options.clinicName}`)
+            .replace(/\$url\$/g, `${options.url}`)
+            .replace(/\$address\$/g, `${options.address}`)
+            .replace(/\$email\$/g, `${options.email}`)
+            .replace(/\$footer\$/g, `${options.footer}`)
+            .replace(/\$open-days\$/g, `${options.openDays}`)
+            .replace(/\$open-times\$/g,`${options.openTimes}`);
+
+        //dynamically adding phone numbers
+        for(let i=0; i<options.tel.length; i++){
+            const regex = new RegExp(`\\$tel${i}\\$`, "g");
+            rendered = rendered.replace(regex, `${options.tel[i]}`);
+        }
 
         return callback(null, rendered);
     });

@@ -4,10 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>$clinic-name$</title>
 </head>
 <body>
-    <!--TODO: Develop form-->
-    hello
+    <header>
+        <p>Hello! Welcome to $clinic-name$. Call us at $tel0$ or $tel1$</p>
+    </header>
+    <form>
+        <input type="text" name="firstName" id="first" placeholder="First Name">
+        <input type="text" name="middleName" id="middle" placeholder="Middle Name">
+        <input type="text" name="lastName" id="last" placeholder="Last Name">
+        <input type="date" name="dob" id="dob" value="2000-01-01">
+        <input type="text" name="address" id="address" placeholder="Address Line">
+        <input type="text" name="city" id="city" placeholder="City">
+        <input type="text" name="state" id="state" placeholder="State">
+        <input type="text" name="zipCode" id="zip" placeholder="Zip Code">
+        <input type="tel" name="phone" id="phone" placeholder="Phone">
+        <input type="email" name="email" id="email" placeholder="Email">
+        <input type="text" name="insuranceName" id="insuranceName" placeholder="Insurance Name">
+        <input type="number" name="insuranceNumber" id="insuranceNumber" placeholder="Insurance Number">
+        <span>
+            <input type="text" id="fileName" placeholder="No picture selected" disabled>
+            <label for="insurancePic">
+                Upload
+                <input type="file" name="insurancePic" id="insurancePic">
+            </label>
+        </span>
+        <input type="submit" value="Submit">
+    </form>
+    <footer>
+        $footer$
+    </footer>
 </body>
 </html>

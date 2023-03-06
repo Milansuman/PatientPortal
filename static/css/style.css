@@ -1,0 +1,99 @@
+:root{
+    --background: #efefef;
+    --text: #333333;
+    --input: #dedede;
+    --input-text: #555555;
+    --button: #3d49b8;
+    --button-text: #dedede;
+    --border: #343434;
+}
+
+body, p{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    background-color: var(--background);
+    font-family: Helvetica, sans-serif;
+    color: var(--text);
+    width: 100vw;
+}
+
+header{
+    display: flex;
+    padding: 20px 5% 20px 5%;
+    font-size: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin: 0% 5% 0% 5%;
+}
+
+input{
+    margin-top: 15px;
+    appearance: none;
+    outline: none;
+    max-width: 400px;
+    width: 100%;
+}
+
+input[type='text'], input[type='tel'], input[type='date'], input[type='email'], input[type='number']{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--input);
+    min-height: 25px;
+    padding: 3px;
+    padding-left: 10px;
+    color: var(--input-text);
+    font-weight: bold;
+}
+
+input[type='submit']{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button);
+    color: var(--button-text);
+    padding: 5px;
+    font-weight: bold;
+    max-width: 410px;
+    padding: 10px 0px 10px 0px;
+}
+
+input[type='file']{
+    display: none;
+}
+
+span{
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    align-items: center;
+    border-radius: 5px;
+    max-width: 410px;
+}
+
+span>input{
+    margin: 0px;
+    border-radius: 5px 0px 0px 5px;
+    width: 100%;
+}
+
+span>label{
+    background-color: var(--button);
+    color: var(--button-text);
+    padding: 5px;
+    padding-left: 10px;
+    margin-left: auto;
+    border-radius: 0px 5px 5px 0px;
+    height: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+footer{
+    padding: 25px 5% 25px 5%;
+}
