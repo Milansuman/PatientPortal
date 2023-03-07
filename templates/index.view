@@ -13,7 +13,7 @@
         <h1>Welcome to $clinic-name$!</h1>
         <p>Book an appointment with us</p>
     </header>
-    <form>
+    <form action="/appointment" method="post">
         <input type="text" name="firstName" id="first" placeholder="First Name">
         <input type="text" name="middleName" id="middle" placeholder="Middle Name">
         <input type="text" name="lastName" id="last" placeholder="Last Name">
@@ -29,7 +29,7 @@
         <span>
             <input type="text" id="fileName" placeholder="Upload picture of insurance" disabled>
             <label for="insurancePic">
-                Upload
+                <button>Upload</button>
                 <input type="file" name="insurancePic" id="insurancePic">
             </label>
         </span>
@@ -51,7 +51,7 @@
     <footer>
         <a href="$url$">$url$</a>
         <p>$address$</p>
-        <a href="tel:$tel$">$tel$</a>
+        <a href="tel:$tel$">$tel0$</a>
         <a href="mailto:$email$">$email$</a>
     </footer>
 </body>

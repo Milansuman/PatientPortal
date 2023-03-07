@@ -11,6 +11,9 @@ const app = express();
 //Setting up static resources
 app.use(express.static(path.join(__dirname, "static/")));
 
+//setting up forms
+app.use(express.urlencoded({extended: true}));
+
 //Setting up a templating engine so clinics can easily change text to suit their needs
 app.engine(TEMPLATE_EXT, (filePath, options, callback) => {
     fs.readFile(filePath, (err, content) => {
@@ -47,4 +50,13 @@ app.get("/", (req, res) => {
     })
 });
 
+app.post("/appointment", (req, res) => {
+    makeAppointment(req.body);
+    res.redirect("/")
+});
+
 app.listen(PORT);
+
+function makeAppointment(data){
+    //TODO: Implement function
+}
