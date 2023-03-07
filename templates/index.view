@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>$clinic-name$</title>
+    <script src="js/app.js" defer></script>
 </head>
 <body>
     <header>
-        <p>Hello! Welcome to $clinic-name$. Call us at $tel0$ or $tel1$</p>
+        <h1>Welcome to $clinic-name$!</h1>
+        <p>Book an appointment with us</p>
     </header>
     <form>
         <input type="text" name="firstName" id="first" placeholder="First Name">
@@ -25,7 +27,7 @@
         <input type="text" name="insuranceName" id="insuranceName" placeholder="Insurance Name">
         <input type="number" name="insuranceNumber" id="insuranceNumber" placeholder="Insurance Number">
         <span>
-            <input type="text" id="fileName" placeholder="No picture selected" disabled>
+            <input type="text" id="fileName" placeholder="Upload picture of insurance" disabled>
             <label for="insurancePic">
                 Upload
                 <input type="file" name="insurancePic" id="insurancePic">
@@ -33,8 +35,24 @@
         </span>
         <input type="submit" value="Submit">
     </form>
+    <section>
+        <h2>A representative will call you to schedule a visit.</h2>
+        <p>
+            Be sure to bring your insurance card, list of medications, records from your previous doctor,
+            and any consultation notes from your specialist.
+        </p>
+        <h2>Consider reflecting on these questions before your visit</h2>
+        <p>
+            <i>What do I want to tell my doctor?</i> <br>
+            <i>Is there anything I'd like to work on to improve my health?</i>
+        </p>
+        <p>For more information visit <a href="https://bestcareever.com/">https://bestcareever.com/</a></p>
+    </section>
     <footer>
-        $footer$
+        <a href="$url$">$url$</a>
+        <p>$address$</p>
+        <a href="tel:$tel$">$tel$</a>
+        <a href="mailto:$email$">$email$</a>
     </footer>
 </body>
 </html>

@@ -1,29 +1,49 @@
 :root{
     --background: #efefef;
     --text: #333333;
+    --faded-text: #555555;
     --input: #dedede;
     --input-text: #555555;
     --button: #3d49b8;
     --button-text: #dedede;
     --border: #343434;
+    --footer: #333333;
 }
 
-body, p{
+body, p, h1{
     margin: 0px;
     padding: 0px;
 }
 
 body{
     background-color: var(--background);
-    font-family: Helvetica, sans-serif;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: var(--text);
     width: 100vw;
 }
 
 header{
     display: flex;
+    flex-direction: column;
     padding: 20px 5% 20px 5%;
     font-size: 20px;
+}
+
+a{
+    color: #3d49b8;
+}
+
+h1{
+    font-size: 30px;
+}
+
+h2{
+    font-size: 22px;
+}
+
+p{
+    color: var(--faded-text);
+    margin-top: 5px;
 }
 
 form{
@@ -94,6 +114,18 @@ span>label{
     text-align: center;
 }
 
+section{
+    padding: 25px 5% 25px 5%;
+
+}
+
 footer{
     padding: 25px 5% 25px 5%;
+    background-color: var(--footer);
+    display: flex;
+    flex-direction: column;
+}
+
+footer>*{
+    color: var(--background);
 }

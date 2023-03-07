@@ -1,11 +1,11 @@
 {
     "clinicName": "bestcareever",
-    "description": "",
-    "tel": [],
-    "openDays": "",
-    "openTimes": "",
-    "footer": "",
-    "url": "",
-    "address": "",
-    "email": ""
+    "description": "Lorem ipsum dolor sit amet",
+    "tel": ["1234567890", "0987654321"],
+    "openDays": "Mon-Sat",
+    "openTimes": "9:00 AM - 5:00 PM",
+    "footer": "This is a footer",
+    "url": "https://example.com/",
+    "address": "test street, test Lane",
+    "email": "test@gmail.com"
 }
