@@ -9,6 +9,8 @@
     --button-text: #dedede;
     --border: #343434;
     --footer: #333333;
+    --error-background: #e4a5a5;
+    --error-text: #be3131;
 }
 
 body, p, h1{
@@ -136,4 +138,24 @@ footer{
 
 footer>*{
     color: var(--background);
+}
+
+#error{
+    margin: 25px 5% 25px 5%;
+    background-color: var(--error-background);
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#error>p{
+    color: var(--error-text);
+    font-weight: bold;
+}
+
+#error.visible{
+    display: flex;
+}
+
+#error.invisible{
+    display: none;
 }

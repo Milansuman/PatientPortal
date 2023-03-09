@@ -9,30 +9,34 @@
     <script src="js/app.js" defer></script>
 </head>
 <body>
+    <div id="error" class="$visible$">
+        <p>An error occurred.</p>
+    </div>
     <header>
         <h1>Welcome to $clinic-name$!</h1>
         <p>Book an appointment with us</p>
     </header>
-    <form action="/appointment" method="post">
-        <input type="text" name="firstName" id="first" placeholder="First Name">
+    <form action="/appointment" method="post" enctype="multipart/form-data">
+        <input type="text" name="firstName" id="first" placeholder="First Name*" required>
         <input type="text" name="middleName" id="middle" placeholder="Middle Name">
         <input type="text" name="lastName" id="last" placeholder="Last Name">
-        <input type="date" name="dob" id="dob" value="2000-01-01">
-        <input type="text" name="address" id="address" placeholder="Address Line">
-        <input type="text" name="city" id="city" placeholder="City">
-        <input type="text" name="state" id="state" placeholder="State">
-        <input type="text" name="zipCode" id="zip" placeholder="Zip Code">
-        <input type="tel" name="phone" id="phone" placeholder="Phone">
+        <input type="date" name="dob" id="dob" value="2000-01-01" required>
+        <input type="text" name="address" id="address" placeholder="Address Line*" required>
+        <input type="text" name="city" id="city" placeholder="City*" required>
+        <input type="text" name="state" id="state" placeholder="State*" required>
+        <input type="text" name="zipCode" id="zip" placeholder="Zip Code*" required>
+        <input type="tel" name="phone" id="phone" placeholder="Phone*" required>
         <input type="email" name="email" id="email" placeholder="Email">
-        <input type="text" name="insuranceName" id="insuranceName" placeholder="Insurance Name">
-        <input type="number" name="insuranceNumber" id="insuranceNumber" placeholder="Insurance Number">
+        <input type="text" name="insuranceName" id="insuranceName" placeholder="Insurance Name*" required>
+        <input type="number" name="insuranceNumber" id="insuranceNumber" placeholder="Insurance Number*" required>
         <span>
-            <input type="text" id="fileName" placeholder="Upload picture of insurance" disabled>
+            <input type="text" id="fileName" placeholder="Upload picture of insurance*" disabled>
             <label for="insurancePic">
                 <button>Upload</button>
-                <input type="file" name="insurancePic" id="insurancePic">
+                <input type="file" name="insurancePic" id="insurancePic" accept="image/png, image/jpeg">
             </label>
         </span>
+        <input type="hidden" name="csrf" value="$csrf$">
         <input type="submit" value="Submit">
     </form>
     <section>

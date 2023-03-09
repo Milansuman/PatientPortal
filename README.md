@@ -7,7 +7,7 @@ Patient Portal is a PWA that makes it easy for clinics to set up appointments wi
 - [x] Set up project skeleton
 - [x] Add templating engine so clinics can customize the main view
 - [ ] Set up icons for the PWA
-- [ ] Implement form
-- [ ] Test and improve security and compliance with NIST standards
+- [x] Implement form
+- [ ] Test and improve security
 - [ ] Add configuration options for clinics
 - [ ] Add localisation
