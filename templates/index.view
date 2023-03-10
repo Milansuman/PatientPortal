@@ -29,13 +29,12 @@
         <input type="email" name="email" id="email" placeholder="Email">
         <input type="text" name="insuranceName" id="insuranceName" placeholder="Insurance Name*" required>
         <input type="number" name="insuranceNumber" id="insuranceNumber" placeholder="Insurance Number*" required>
-        <span>
-            <input type="text" id="fileName" placeholder="Upload picture of insurance*" disabled>
-            <label for="insurancePic">
-                <button>Upload</button>
-                <input type="file" name="insurancePic" id="insurancePic" accept="image/png, image/jpeg">
-            </label>
-        </span>
+        <label for="insurancePic">
+            <div><img src="assets/image.svg" alt="Add new image" id="insuranceImage"></div>
+            <p id="pictureText">Add a picture of your insurance.</p>
+            <input type="file" name="insurancePic" id="insurancePic" accept="image/png, image/jpeg">
+        </label>
+        
         <input type="hidden" name="csrf" value="$csrf$">
         <input type="submit" value="Submit">
     </form>

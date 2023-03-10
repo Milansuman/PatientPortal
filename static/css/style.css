@@ -7,10 +7,12 @@
     --button: #3d49b8;
     --button-hover: #515dc9; 
     --button-text: #dedede;
-    --border: #343434;
+    --border: #757575;
     --footer: #333333;
     --error-background: #e4a5a5;
     --error-text: #be3131;
+    --add-new-background: #cecece;
+    --add-new-text: #565656;
 }
 
 body, p, h1{
@@ -94,35 +96,30 @@ input[type='file']{
     display: none;
 }
 
-span{
+label{
     display: flex;
-    flex-direction: row;
-    margin-top: 15px;
+    justify-content: center;
     align-items: center;
     border-radius: 5px;
-    max-width: 410px;
-}
-
-span>input{
-    margin: 0px;
-    border-radius: 5px 0px 0px 5px;
+    border: 3px dashed var(--border);
+    padding: 25px 5px 25px 5px;
     width: 100%;
+    margin-top: 15px;
+    max-width: 400px;
+    flex-direction: column;
 }
 
-span>label>button{
-    outline: none;
-    border: none;
-    margin: 0px;
-    border-radius: 0px 5px 5px 0px;
-    background-color: var(--button);
-    color: var(--button-text);
-    height: 30px;
+label>p{
     font-weight: bold;
-    pointer-events: none;
 }
 
-span>label>button:hover{
-    background-color: var(--button-hover);
+label>div{
+    margin-bottom: 15px;
+}
+
+label>div>img{
+    width: 100px;
+    border-radius: 5px;
 }
 
 section{

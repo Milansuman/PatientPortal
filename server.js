@@ -9,15 +9,13 @@ const https = require("https");
 //Predefined constants
 const PORT = 8080;
 const TEMPLATE_EXT = "view"; //file extension of templates
-const KEY_PATH = path.join(__dirname, "localhost.key"); //path to private key
-const CERT_PATH = path.join(__dirname, "localhost.crt"); //path to certificate
+const KEY_PATH = path.join(__dirname, "localhost-key.pem"); //path to private key
+const CERT_PATH = path.join(__dirname, "localhost.pem"); //path to certificate
 
 const app = express();
 const upload = multer({dest: path.join(__dirname, "uploads/")});
 const tokens = new Tokens();
 let secret = "";
-
-//setting up cookies
 
 //Setting up static resources
 app.use(express.static(path.join(__dirname, "static/")));
@@ -61,8 +59,12 @@ app.get("/", (req, res) => {
         if (err) throw err;
         options = JSON.parse(content.toString());
 
-        if(req.headers.cookie.split("=")[1] === "1"){
-            options.error = "visible";
+        if(req.headers.cookie !== undefined){
+            if(req.headers.cookie.split("=")[1] === "1"){
+                options.error = "visible";
+            }else{
+                options.error = "invisible";
+            }
         }else{
             options.error = "invisible";
         }
