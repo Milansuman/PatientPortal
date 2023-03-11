@@ -1,27 +1,34 @@
 const express = require("express");
 const helmet = require("helmet");
-const multer = require("multer");
 const Tokens = require("csrf");
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
+const utf8 = require("crypto-js/enc-utf8");
+const AES = require("crypto-js/aes");
+const MD5 = require("crypto-js/md5");
+const utility = require("./utility");
 
 //Predefined constants
 const PORT = 8080;
 const TEMPLATE_EXT = "view"; //file extension of templates
 const KEY_PATH = path.join(__dirname, "localhost-key.pem"); //path to private key
 const CERT_PATH = path.join(__dirname, "localhost.pem"); //path to certificate
+const UPLOADS = path.join(__dirname, "uploads/");
 
 const app = express();
-const upload = multer({dest: path.join(__dirname, "uploads/")});
 const tokens = new Tokens();
 let secret = "";
+let cipherKey = "";
 
 //Setting up static resources
 app.use(express.static(path.join(__dirname, "static/")));
 
 //Setting up secure headers
 app.use(helmet());
+
+//Setting up JSON
+app.use(express.json({limit:"500kb"}));
 
 //Setting up a templating engine so clinics can easily change text to suit their needs
 app.engine(TEMPLATE_EXT, (filePath, options, callback) => {
@@ -38,8 +45,7 @@ app.engine(TEMPLATE_EXT, (filePath, options, callback) => {
             .replace(/\$footer\$/g, `${options.footer}`)
             .replace(/\$open-days\$/g, `${options.openDays}`)
             .replace(/\$open-times\$/g,`${options.openTimes}`)
-            .replace(/\$csrf\$/g, `${options.csrf}`)
-            .replace(/\$visible\$/g, `${options.error}`);
+            .replace(/\$csrf\$/g, `${options.csrf}`);
 
         //dynamically adding phone numbers
         for(let i=0; i<options.tel.length; i++){
@@ -59,15 +65,6 @@ app.get("/", (req, res) => {
         if (err) throw err;
         options = JSON.parse(content.toString());
 
-        if(req.headers.cookie !== undefined){
-            if(req.headers.cookie.split("=")[1] === "1"){
-                options.error = "visible";
-            }else{
-                options.error = "invisible";
-            }
-        }else{
-            options.error = "invisible";
-        }
         //adding csrf token
         tokens.secret((err, secretString) => {
             if(err) throw err;
@@ -78,13 +75,18 @@ app.get("/", (req, res) => {
     })
 });
 
-app.post("/appointment", upload.single("insurancePic") ,(req, res) => {
-    if(!tokens.verify(secret, req.body.csrf) || !validate(req.body, req.file)){
-        res.cookie("error", "1", {httpOnly: true}).redirect("/");
+app.post("/appointment", (req, res) => {
+    if(!tokens.verify(secret, req.body.csrf) || !validate(decrypt(req.body))){
+        res.sendStatus(400);
     }else{
-        makeAppointment(req.body, req.file);
-        res.cookie("error", "0", {httpOnly: true}).redirect("/");
+        makeAppointment(decrypt(req.body));
+        res.sendStatus(200);
     }
+});
+
+app.get("/key", (req, res) => {
+    cipherKey = MD5(Math.floor(Math.random*10).toString()).toString();
+    res.send(cipherKey);
 });
 
 options = {
@@ -94,7 +96,7 @@ options = {
 
 https.createServer(options, app).listen(PORT);
 
-function validate(data, file){
+function validate(data){
     const nameRegex = RegExp("[<>;:\"?\\/\\!@#\\$%^&*()|~`\\-_]", "g");
 
     //validating formdata
@@ -140,8 +142,25 @@ function validate(data, file){
     return true;
 }
 
-function makeAppointment(data, file){
+function makeAppointment(data){
     //TODO: Implement function
     console.log(data);
-    console.log(file);
+}
+
+function decrypt(data){
+    let decryptedData = {};
+    for(const key in data){
+        if(key === "csrf") continue;
+        
+        if(key === "insurancePic"){
+            const decryptedImage = AES.decrypt(data[key], cipherKey);
+            fs.writeFile(path.join(UPLOADS, "test"), utility.wordArrayToUint8Array(decryptedImage), (err) => {
+                if(err) throw err;
+            });
+            continue;
+        }
+
+        decryptedData[key] = AES.decrypt(data[key], cipherKey).toString(utf8);
+    }
+    return decryptedData;
 }

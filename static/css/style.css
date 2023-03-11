@@ -13,6 +13,8 @@
     --error-text: #be3131;
     --add-new-background: #cecece;
     --add-new-text: #565656;
+    --success-background: #b5e9b9;
+    --success-text: #308b38;
 }
 
 body, p, h1{
@@ -25,6 +27,7 @@ body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: var(--text);
     width: 100vw;
+    scroll-behavior: smooth;
 }
 
 header{
@@ -149,10 +152,23 @@ footer>*{
     font-weight: bold;
 }
 
-#error.visible{
+#success{
+    margin: 25px 5% 25px 5%;
+    background-color: var(--success-background);
+    padding: 15px;
+    border-radius: 5px; 
+}
+
+#success>p{
+    color: var(--success-text);
+    font-weight: bold;
+}
+
+.visible{
     display: flex;
 }
 
-#error.invisible{
+.invisible{
     display: none;
 }
+

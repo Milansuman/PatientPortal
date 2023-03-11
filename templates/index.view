@@ -6,17 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>$clinic-name$</title>
+    <script src="bower_components/crypto-js/crypto-js.js"></script>
     <script src="js/app.js" defer></script>
 </head>
 <body>
-    <div id="error" class="$visible$">
+    <div id="error" class="invisible">
         <p>An error occurred.</p>
+    </div>
+    <div id="success" class="invisible">
+        <p>Your appointment has been registered!</p>
     </div>
     <header>
         <h1>Welcome to $clinic-name$!</h1>
         <p>Book an appointment with us</p>
     </header>
-    <form action="/appointment" method="post" enctype="multipart/form-data">
+    <form id="form">
         <input type="text" name="firstName" id="first" placeholder="First Name*" required>
         <input type="text" name="middleName" id="middle" placeholder="Middle Name">
         <input type="text" name="lastName" id="last" placeholder="Last Name">
@@ -35,8 +39,8 @@
             <input type="file" name="insurancePic" id="insurancePic" accept="image/png, image/jpeg">
         </label>
         
-        <input type="hidden" name="csrf" value="$csrf$">
-        <input type="submit" value="Submit">
+        <input type="hidden" name="csrf" value="$csrf$" id="csrf">
+        <input type="submit" value="Submit" id="submit">
     </form>
     <section>
         <h2>A representative will call you to schedule a visit.</h2>
