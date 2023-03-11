@@ -154,9 +154,11 @@ function decrypt(data){
         
         if(key === "insurancePic"){
             const decryptedImage = AES.decrypt(data[key], cipherKey);
-            fs.writeFile(path.join(UPLOADS, "test"), utility.wordArrayToUint8Array(decryptedImage), (err) => {
+            const fileName = MD5(Math.floor(Math.random*100).toString()).toString();
+            fs.writeFile(path.join(UPLOADS, fileName), utility.wordArrayToUint8Array(decryptedImage), (err) => {
                 if(err) throw err;
             });
+            decryptedData["fileName"]  = fileName;
             continue;
         }
 
