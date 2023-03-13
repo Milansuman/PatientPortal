@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const helmet = require("helmet");
 const Tokens = require("csrf");
 const path = require("path");
@@ -18,8 +19,6 @@ const UPLOADS = path.join(__dirname, "uploads/");
 
 const app = express();
 const tokens = new Tokens();
-let secret = "";
-let cipherKey = "";
 
 //Setting up static resources
 app.use(express.static(path.join(__dirname, "static/")));
@@ -29,6 +28,14 @@ app.use(helmet());
 
 //Setting up JSON
 app.use(express.json({limit:"500kb"}));
+
+//Setting up sessions
+app.use(session({
+    secret: "Clergyman-Obsessive-Chariot1-Freeware-Violator",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {secure: true}
+}));
 
 //Setting up a templating engine so clinics can easily change text to suit their needs
 app.engine(TEMPLATE_EXT, (filePath, options, callback) => {
@@ -60,7 +67,7 @@ app.engine(TEMPLATE_EXT, (filePath, options, callback) => {
 app.set("views", path.join(__dirname, "templates/"));
 app.set("view engine", TEMPLATE_EXT);
 
-app.get("/", (req, res) => {
+app.get("/appointment", (req, res) => {
     fs.readFile(path.join(__dirname, "config.json") , (err, content) => {
         if (err) throw err;
         options = JSON.parse(content.toString());
@@ -68,25 +75,27 @@ app.get("/", (req, res) => {
         //adding csrf token
         tokens.secret((err, secretString) => {
             if(err) throw err;
-            secret = secretString;
-            options.csrf = tokens.create(secret);
+            req.session.secretString = secretString;
+            options.csrf = tokens.create(req.session.secretString);
             res.render("index", options);
         });
     })
 });
 
 app.post("/appointment", (req, res) => {
-    if(!tokens.verify(secret, req.body.csrf) || !validate(decrypt(req.body))){
+    if(!tokens.verify(req.session.secretString, req.body.csrf) || !validate(decrypt(req.body, req.session.cipherKey))){
         res.sendStatus(400);
     }else{
-        makeAppointment(decrypt(req.body));
+        makeAppointment(decrypt(req.body, req.session.cipherKey));
         res.sendStatus(200);
     }
 });
 
 app.get("/key", (req, res) => {
-    cipherKey = MD5(Math.floor(Math.random*10).toString()).toString();
-    res.send(cipherKey);
+    if(!req.session.cipherKey){
+        req.session.cipherKey = MD5(Math.floor(Math.random*10).toString()).toString();   
+    }
+    res.send(req.session.cipherKey);
 });
 
 options = {
@@ -101,7 +110,7 @@ function validate(data){
 
     //validating formdata
     for(let key in data){
-        if(data.key === ''){
+        if(data[key] === ''){
             continue;
         }
 
@@ -147,14 +156,14 @@ function makeAppointment(data){
     console.log(data);
 }
 
-function decrypt(data){
+function decrypt(data, cipherKey){
     let decryptedData = {};
     for(const key in data){
         if(key === "csrf") continue;
         
         if(key === "insurancePic"){
             const decryptedImage = AES.decrypt(data[key], cipherKey);
-            const fileName = MD5(Math.floor(Math.random*100).toString()).toString();
+            const fileName = MD5(data.csrf).toString();
             fs.writeFile(path.join(UPLOADS, fileName), utility.wordArrayToUint8Array(decryptedImage), (err) => {
                 if(err) throw err;
             });
